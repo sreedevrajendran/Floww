@@ -39,7 +39,16 @@
     "@capacitor/preferences": "^8.0.1",
     "@google/genai": "^1.42.0",
     "@google/generative-ai": "^0.24.1",
-    "@react-email/components": "^1.0.8",
+    "@react-email/body": "^0.3.0",
+    "@react-email/button": "^0.2.1",
+    "@react-email/container": "^0.0.16",
+    "@react-email/head": "^0.0.13",
+    "@react-email/hr": "^0.0.12",
+    "@react-email/html": "^0.0.12",
+    "@react-email/img": "^0.0.12",
+    "@react-email/preview": "^0.0.14",
+    "@react-email/section": "^0.0.17",
+    "@react-email/text": "^0.1.6",
     "@tailwindcss/postcss": "^4.2.0",
     "@tanstack/react-query": "^5.90.21",
     "@trpc/client": "^11.10.0",
@@ -89,7 +98,6 @@
     "autoprefixer": "^10.4.24",
     "postcss": "^8.5.6",
     "puppeteer-core": "^25.16.0",
-    "react-email": "^5.2.8",
     "tailwindcss": "^3.4.19"
   },
   "overrides": {
@@ -102,6 +110,10 @@
     "@auth/core": "^0.41.3",
     "@grpc/grpc-js": "^1.14.7",
     "effect": "^3.22.4",
-    "cookie": "^0.7.2"
+    "cookie": "^0.7.2",
+    "uuid": "^11.1.1",
+    "glob": "^14.0.3",
+    "minimatch": "^11.0.4",
+    "@react-email/render": "^2.2.0"
   }
 }
