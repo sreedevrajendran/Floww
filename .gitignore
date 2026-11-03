@@ -48,3 +48,12 @@ next-env.d.ts
 /public/uploads/*
 !/public/uploads/.gitkeep
 .env*
+
+# mobile builds & release artifacts
+*.apk
+*.aab
+*.aar
+/release/
+
+# notebooks
+.ipynb_checkpoints/
