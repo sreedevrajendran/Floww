@@ -1,0 +1,32 @@
+# GitHub Linguist Overrides
+# Documentation: https://github.com/github/linguist/blob/master/docs/overrides.md
+
+# 1. Native Mobile Scaffolding & Dependencies (Capacitor Android)
+# Mark the entire android/ folder as vendored so Java/Gradle/XML do not overpower TypeScript/React
+android/** linguist-vendored=true
+
+# 2. Notebooks (Exclude from stats if ever created/tested)
+*.ipynb linguist-detectable=false
+
+# 3. Build & Compilation Outputs
+.next/** linguist-detectable=false
+out/** linguist-detectable=false
+build/** linguist-detectable=false
+dist/** linguist-detectable=false
+*.tsbuildinfo linguist-detectable=false
+
+# 4. Lockfiles & Configurations
+package-lock.json linguist-generated=true
+*.config.js linguist-detectable=false
+*.config.ts linguist-detectable=false
+capacitor.config.ts linguist-detectable=false
+next.config.ts linguist-detectable=false
+postcss.config.js linguist-detectable=false
+tailwind.config.js linguist-detectable=false
+
+# 5. Documentation, Public Assets, & Press Kit
+README.md linguist-documentation=true
+LICENSE linguist-documentation=true
+public/** linguist-documentation=true
+press_kit/** linguist-documentation=true
+scripts/** linguist-detectable=false
