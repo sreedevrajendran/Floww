@@ -12,15 +12,8 @@ export function sanitizeString(input: unknown, maxLength = 255): string {
     // Normalize unicode to prevent homograph / encoding bypasses
     let cleaned = input.normalize("NFKC").trim();
 
-    // Strip HTML tags (<script>, <iframe>, <a>, etc.)
-    cleaned = cleaned.replace(/<[^>]*>/g, "");
-
-    // Strip common script/event injection vectors
-    cleaned = cleaned
-        .replace(/javascript:/gi, "")
-        .replace(/data:/gi, "")
-        .replace(/vbscript:/gi, "")
-        .replace(/on\w+\s*=/gi, "");
+    // Strip HTML tag delimiters (< and >) safely without multi-character nesting bypasses
+    cleaned = cleaned.replace(/[<>]/g, "");
 
     // Truncate to maximum permissible length to prevent memory exhaustion / DoS
     if (cleaned.length > maxLength) {

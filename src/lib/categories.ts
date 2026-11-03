@@ -244,7 +244,7 @@ export function normalizeCategoryName(raw?: string | null): string {
         lower.includes("holiday") ||
         lower.includes("makemytrip") ||
         lower.includes("agoda") ||
-        lower.includes("booking.com")
+        lower.includes("booking")
     ) {
         return "Travel";
     }

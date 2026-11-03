@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import { showMatchingAlert } from "@/components/ui/AlertCard";
 import { useCurrency } from "@/context/CurrencyContext";
 import { findMatchingCategory, inferCategoryFromTransaction } from "@/lib/categories";
+import { sanitizeString } from "@/lib/sanitize";
 
 export interface ExpenseEditData {
     id: string;
@@ -264,8 +265,8 @@ export function AddExpenseSheet({ open, onOpenChange, onSuccess, editData, editI
             return;
         }
 
-        const cleanMerchant = merchant.replace(/<[^>]*>/g, "").trim().slice(0, 255);
-        const cleanNote = note ? note.replace(/<[^>]*>/g, "").trim().slice(0, 1000) : undefined;
+        const cleanMerchant = sanitizeString(merchant, 255);
+        const cleanNote = note ? sanitizeString(note, 1000) : undefined;
         let categoryId = selectedCategory;
 
         // If custom category is selected and name provided

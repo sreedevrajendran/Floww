@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 import { showMatchingAlert } from "@/components/ui/AlertCard";
 import { useCurrency } from "@/context/CurrencyContext";
+import { sanitizeString } from "@/lib/sanitize";
 
 const PRESET_SOURCES = [
     { name: "Salary", icon: Briefcase, color: "#007AFF" },
@@ -194,8 +195,8 @@ export function AddIncomeSheet({ open, onOpenChange, onSuccess, editData, editId
             return;
         }
 
-        const cleanSource = source.replace(/<[^>]*>/g, "").trim().slice(0, 255);
-        const cleanNote = note ? note.replace(/<[^>]*>/g, "").trim().slice(0, 1000) : undefined;
+        const cleanSource = sanitizeString(source, 255);
+        const cleanNote = note ? sanitizeString(note, 1000) : undefined;
 
         setUploading(true);
         setError(null);
