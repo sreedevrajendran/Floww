@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
     devIndicators: false,
     poweredByHeader: false,
     serverExternalPackages: ["firebase-admin"],
+    experimental: {
+        agentUpgrade: "security",
+    },
     images: {
         remotePatterns: [
             { protocol: "https", hostname: "lh3.googleusercontent.com" },
