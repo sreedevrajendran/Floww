@@ -22,8 +22,20 @@ export function BottomTabBar() {
     const utils = trpc.useUtils();
     const [actionSheetOpen, setActionSheetOpen] = useState(false);
 
+    const handlePlusClick = () => {
+        if (pathname === "/incomes" || pathname?.startsWith("/incomes")) {
+            window.dispatchEvent(new CustomEvent("app:open-add-income"));
+        } else if (pathname === "/expenses" || pathname?.startsWith("/expenses")) {
+            window.dispatchEvent(new CustomEvent("app:open-add-expense"));
+        } else if (pathname === "/budgets" || pathname?.startsWith("/budgets")) {
+            window.dispatchEvent(new CustomEvent("app:open-add-budget"));
+        } else {
+            setActionSheetOpen(true);
+        }
+    };
+
     useEffect(() => {
-        const handleOpen = () => setActionSheetOpen(true);
+        const handleOpen = () => handlePlusClick();
         const handleBack = (e: Event) => {
             if (actionSheetOpen) {
                 e.preventDefault();
@@ -36,7 +48,7 @@ export function BottomTabBar() {
             window.removeEventListener("app:open-action-sheet", handleOpen);
             window.removeEventListener("app:back-press", handleBack);
         };
-    }, [actionSheetOpen]);
+    }, [actionSheetOpen, pathname]);
 
     return (
         <>
@@ -49,8 +61,14 @@ export function BottomTabBar() {
                                     <div className="absolute -top-6">
                                         <motion.button
                                             whileTap={{ scale: 0.9 }}
-                                            onClick={() => setActionSheetOpen(true)}
-                                            className="w-[60px] h-[60px] rounded-full shadow-[0_8px_30px_rgba(0,122,255,0.4)] flex items-center justify-center bg-gradient-to-br from-ios-blue to-[#005bb5] relative"
+                                            onClick={handlePlusClick}
+                                            aria-label={
+                                                pathname?.startsWith("/incomes") ? "Add Income" :
+                                                pathname?.startsWith("/expenses") ? "Add Expense" :
+                                                pathname?.startsWith("/budgets") ? "Add Budget" :
+                                                "Add Transaction"
+                                            }
+                                            className="w-[60px] h-[60px] rounded-full shadow-[0_8px_30px_rgba(0,122,255,0.4)] flex items-center justify-center bg-gradient-to-br from-ios-blue to-[#005bb5] relative cursor-pointer"
                                         >
                                             <Plus size={32} className="text-white relative z-10" strokeWidth={2.5} />
                                             {/* Glow effect */}

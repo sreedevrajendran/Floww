@@ -56,8 +56,16 @@ export default function ExpensesPage() {
         const handleUpdate = () => {
             utils.invalidate();
         };
+        const handleOpenAdd = () => {
+            setEditExpense(null);
+            setAddOpen(true);
+        };
         window.addEventListener("app:transactions-updated", handleUpdate);
-        return () => window.removeEventListener("app:transactions-updated", handleUpdate);
+        window.addEventListener("app:open-add-expense", handleOpenAdd);
+        return () => {
+            window.removeEventListener("app:transactions-updated", handleUpdate);
+            window.removeEventListener("app:open-add-expense", handleOpenAdd);
+        };
     }, [utils]);
 
     const handleRefresh = async () => {
@@ -203,7 +211,16 @@ export default function ExpensesPage() {
                         <div className="pt-20 text-center">
                             <Receipt size={48} className="mx-auto mb-4 ios-text-secondary opacity-30" />
                             <p className="text-lg font-semibold ios-text-primary">No expenses yet</p>
-                            <p className="text-sm ios-text-secondary mt-1">Add your first expense with the + button</p>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setEditExpense(null);
+                                    setAddOpen(true);
+                                }}
+                                className="text-sm ios-text-secondary hover:text-ios-blue mt-1 cursor-pointer transition-colors"
+                            >
+                                Add your first expense with the + button
+                            </button>
                         </div>
                     )}
                 </div>

@@ -24,11 +24,23 @@ export function DesktopSidebar() {
     const [actionSheetOpen, setActionSheetOpen] = useState(false);
     const [chatOpen, setChatOpen] = useState(false);
 
+    const handlePlusClick = () => {
+        if (pathname === "/incomes" || pathname?.startsWith("/incomes")) {
+            window.dispatchEvent(new CustomEvent("app:open-add-income"));
+        } else if (pathname === "/expenses" || pathname?.startsWith("/expenses")) {
+            window.dispatchEvent(new CustomEvent("app:open-add-expense"));
+        } else if (pathname === "/budgets" || pathname?.startsWith("/budgets")) {
+            window.dispatchEvent(new CustomEvent("app:open-add-budget"));
+        } else {
+            setActionSheetOpen(true);
+        }
+    };
+
     useEffect(() => {
-        const handleOpen = () => setActionSheetOpen(true);
+        const handleOpen = () => handlePlusClick();
         window.addEventListener("app:open-action-sheet", handleOpen);
         return () => window.removeEventListener("app:open-action-sheet", handleOpen);
-    }, []);
+    }, [pathname]);
 
     return (
         <>
@@ -81,11 +93,17 @@ export function DesktopSidebar() {
                     <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => setActionSheetOpen(true)}
-                        className="w-full flex items-center justify-center gap-2 py-3 rounded-ios-sm bg-gradient-to-r from-ios-blue to-[#005bb5] text-white font-semibold shadow-md shadow-ios-blue/30 mt-2"
+                        onClick={handlePlusClick}
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-ios-sm bg-gradient-to-r from-ios-blue to-[#005bb5] text-white font-semibold shadow-md shadow-ios-blue/30 mt-2 cursor-pointer"
                     >
                         <Plus size={20} strokeWidth={3} />
-                        Add Transaction
+                        {pathname?.startsWith("/incomes")
+                            ? "Add Income"
+                            : pathname?.startsWith("/expenses")
+                            ? "Add Expense"
+                            : pathname?.startsWith("/budgets")
+                            ? "Add Budget"
+                            : "Add Transaction"}
                     </motion.button>
 
                     {/* Chatbot Button */}

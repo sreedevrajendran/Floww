@@ -92,8 +92,16 @@ export default function BudgetsPage() {
         const handleUpdate = () => {
             utils.invalidate();
         };
+        const handleOpenAdd = () => {
+            setEditingBudget(null);
+            setSheetOpen(true);
+        };
         window.addEventListener("app:transactions-updated", handleUpdate);
-        return () => window.removeEventListener("app:transactions-updated", handleUpdate);
+        window.addEventListener("app:open-add-budget", handleOpenAdd);
+        return () => {
+            window.removeEventListener("app:transactions-updated", handleUpdate);
+            window.removeEventListener("app:open-add-budget", handleOpenAdd);
+        };
     }, [utils]);
 
     const handleRefresh = async () => {
@@ -148,7 +156,16 @@ export default function BudgetsPage() {
                     <div className="pt-20 text-center">
                         <PiggyBank size={48} className="mx-auto mb-4 ios-text-secondary opacity-30" />
                         <p className="text-lg font-semibold ios-text-primary">No budgets set</p>
-                        <p className="text-sm ios-text-secondary mt-1">Create a budget to track your spending</p>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setEditingBudget(null);
+                                setSheetOpen(true);
+                            }}
+                            className="text-sm ios-text-secondary hover:text-ios-blue mt-1 cursor-pointer transition-colors"
+                        >
+                            Create a budget to track your spending
+                        </button>
                     </div>
                 ) : (
                     (budgets as BudgetWithSpent[])?.map((budget: BudgetWithSpent, i: number) => (
