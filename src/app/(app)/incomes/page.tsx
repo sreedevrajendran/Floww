@@ -53,8 +53,16 @@ export default function IncomesPage() {
         const handleUpdate = () => {
             utils.invalidate();
         };
+        const handleOpenAdd = () => {
+            setEditIncome(null);
+            setAddOpen(true);
+        };
         window.addEventListener("app:transactions-updated", handleUpdate);
-        return () => window.removeEventListener("app:transactions-updated", handleUpdate);
+        window.addEventListener("app:open-add-income", handleOpenAdd);
+        return () => {
+            window.removeEventListener("app:transactions-updated", handleUpdate);
+            window.removeEventListener("app:open-add-income", handleOpenAdd);
+        };
     }, [utils]);
 
     const handleRefresh = async () => {
@@ -190,7 +198,16 @@ export default function IncomesPage() {
                         <div className="pt-20 text-center">
                             <Wallet size={48} className="mx-auto mb-4 ios-text-secondary opacity-30" />
                             <p className="text-lg font-semibold ios-text-primary">No incomes yet</p>
-                            <p className="text-sm ios-text-secondary mt-1">Add your first income with the + button</p>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setEditIncome(null);
+                                    setAddOpen(true);
+                                }}
+                                className="text-sm ios-text-secondary hover:text-ios-blue mt-1 cursor-pointer transition-colors"
+                            >
+                                Add your first income with the + button
+                            </button>
                         </div>
                     )}
                 </div>
